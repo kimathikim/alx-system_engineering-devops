@@ -1,1 +1,0 @@
-Learning more about bash
