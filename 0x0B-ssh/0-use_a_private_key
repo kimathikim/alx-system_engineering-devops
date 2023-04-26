@@ -3,4 +3,3 @@
 # bash script that uses ssh to connect to my server using private key
 
 ssh -i ~/.ssh/school ubuntu@34.207.154.35
-
