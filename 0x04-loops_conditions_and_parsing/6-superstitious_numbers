@@ -16,7 +16,7 @@ while [ $i -le 20 ]; do
 		;;
 
 	*)
-		echo "Best School"
+		echo "$i"
 		;;
 	esac
 	((i++))
