@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# print all the contents of the current directory
+
+LIST=$(ls)
+
+for i in $LIST; do
+	echo "$i" | cut -d "-" -f2
+done
