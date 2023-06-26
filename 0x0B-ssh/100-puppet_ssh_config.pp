@@ -2,14 +2,29 @@
 # refuse to authenticate using a PasswordAuthenticationd
 
 
-file_line { 'Turn off passwd auth':
-  path  => '/home/bk/.ssh/config',
-  line  => '    PasswordAuthentication no',
-  match => '^\s*PasswordAuthentication',
+class ssh_config {
+  file { '/home/your-username/.ssh/config':
+    ensure  => file,
+    owner   => 'your-username',
+    mode    => '0600',
+    replace => false,
+  }
+
+  concat { '/home/your-username/.ssh/config':
+    ensure  => present,
+    owner   => 'your-username',
+    mode    => '0600',
+  }
+
+  concat::fragment { 'Turn off passwd auth':
+    target  => '/home/your-username/.ssh/config',
+    content => '    PasswordAuthentication no',
+  }
+
+  concat::fragment { 'Declare identity file':
+    target  => '/home/your-username/.ssh/config',
+    content => '    IdentityFile ~/.ssh/school',
+  }
 }
 
-file_line { 'Declare identity file':
-  path  => '/home/bk/.ssh/config',
-  line  => '    IdentityFile ~/.ssh/school',
-  match => '^\s*IdentityFile\s+~/.ssh/school',
-}
+include ssh_config
