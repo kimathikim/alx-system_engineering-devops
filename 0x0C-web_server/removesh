@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+file="$1"
+
+while IFS= read -r item; do
+	if [[ "$item" == *".sh" ]]; then
+		mv "$item" "${item%.sh}"
+		ls
+	fi
+done <"$file"

@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+# bash script that Install nginx web server
+
+#update the server
+sudo apt update
+# installl nginx
+sudo apt-get install nginx -y
+# change ownership
+sudo chown -R "$USER":"$USER" /var/www
+# update the default file dispayed
+echo "Hello World!" | tee /var/www/html/index.nginx-debian.html
+# restart nginx
+sudo systemctl restart nginx
+sudo apt autoremove -y
