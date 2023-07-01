@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+# installs apache and displays "Hello Holberton"
+service apache2 start
