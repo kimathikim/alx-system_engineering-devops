@@ -14,7 +14,7 @@ frontend http
 
 backend myservers
     balance roundrobin
-    server 91190-web-02 18.207.235.185:80 check
+    server 91190-web-02 52.3.242.100:80 check
     server 91190-web-01 54.173.223.209:80 check
 "
 
