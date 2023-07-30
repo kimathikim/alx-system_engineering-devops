@@ -4,10 +4,14 @@
 a script that uses restul API to return the
 info of an employee about his TODO list progress
 """
+import csv
 import requests
 from sys import argv
-import csv
 import json
+
+
+class CustomDialect(csv.excel):
+    quoting = csv.QUOTE_ALL
 
 
 def todolistGet(id):
@@ -17,7 +21,7 @@ def todolistGet(id):
     url = "https://jsonplaceholder.typicode.com"
 
     # endpoints
-    user = "{}/users/{}".format(url, id)
+    user = "{}/users/{}".format(url, str(id))
     todo = "{}/todos".format(user)
 
     # get the data. making the request using get method and
@@ -29,13 +33,14 @@ def todolistGet(id):
     # print("{}".format(todo))
 
     # exporting to csv
-    with open(id + ".csv", "w", encoding="utf8") as file:
+    with open(str(id) + ".csv", "w", encoding="utf8") as file:
         exporter = csv.writer(file, delimiter=",", quotechar="'")
         for task in todo:
+            task_completed = "True" if task.get("completed") else "False"
             exporter.writerow([
                 json.dumps(id),
                 json.dumps(user.get("username")),
-                json.dumps((task.get("completed"))),
+                json.dumps(task_completed),
                 json.dumps(task.get("title"))
             ])
 
