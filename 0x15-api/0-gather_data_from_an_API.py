@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+
 """
 a script that uses restul API to return the
 info of an employee about his TODO list progress
