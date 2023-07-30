@@ -6,6 +6,8 @@ info of an employee about his TODO list progress
 """
 import requests
 from sys import argv
+import csv
+import json
 
 
 def todolistGet(id):
@@ -16,23 +18,26 @@ def todolistGet(id):
 
     # endpoints
     user = "{}/users/{}".format(url, id)
-    # print("{}".format(user))
     todo = "{}/todos".format(user)
-    task_Done = "{}?completed=true".format(todo)
 
     # get the data. making the request using get method and
     # specified format to be used
     user = requests.get(user)
     user = user.json()
-    # print("{}".format(user))
     todo = requests.get(todo)
     todo = todo.json()
-    task_Done = requests.get(task_Done)
-    task_Done = task_Done.json()
-    print("Employee {} is done with tasks({}/{}):".format(
-        user.get("name"), len(task_Done), len(todo)))
-    for task in task_Done:
-        print("\t {}".format(task.get("title")))
+    # print("{}".format(todo))
+
+    # exporting to csv
+    with open(id + ".csv", "w", encoding="utf8") as file:
+        exporter = csv.writer(file, delimiter=",", quotechar="'")
+        for task in todo:
+            exporter.writerow([
+                json.dumps(id),
+                json.dumps(user.get("username")),
+                json.dumps((task.get("completed"))),
+                json.dumps(task.get("title"))
+            ])
 
 
 if __name__ == "__main__":
