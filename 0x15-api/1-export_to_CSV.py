@@ -5,9 +5,9 @@ a script that uses restul API to return the
 info of an employee about his TODO list progress
 """
 import csv
-import requests
-from sys import argv
 import json
+from sys import argv
+import requests
 
 
 class CustomDialect(csv.excel):
