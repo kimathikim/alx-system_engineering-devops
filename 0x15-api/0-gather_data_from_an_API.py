@@ -34,7 +34,7 @@ def todolistGet(id):
     task_Done = task_Done.json()
 
     print("Employee {} is done with tasks({}/{}):".format(
-        user['name'], len(task_Done), len(todo)))
+        user.get('name'), len(task_Done), len(todo)))
     for task in task_Done:
         print("\t {}".format(task.get("title")))
 
