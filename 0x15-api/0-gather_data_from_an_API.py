@@ -16,7 +16,6 @@ def todolistGet(id):
 
     # endpoints
     user = "{}/users/{}".format(url, id)
-    # print("{}".format(user))
     todo = "{}/todos".format(user)
     task_Done = "{}?completed=true".format(todo)
 
@@ -25,7 +24,6 @@ def todolistGet(id):
 
     user = requests.get(user)
     user = user.json()
-    # print("{}".format(user))
 
     todo = requests.get(todo)
     todo = todo.json()
@@ -33,12 +31,13 @@ def todolistGet(id):
     task_Done = requests.get(task_Done)
     task_Done = task_Done.json()
 
-    print("Employee {} is done with tasks({}/{}):".format(
-        user.get("name"), len(task_Done), len(todo)))
-    for task in task_Done:
-        print("\t {}".format(task.get("title")))
+    output = "Employee {}: {}".format(user.get("name"), "OK" if len(
+        task_Done) == len(todo) else "Incorrect")
+
+    return output
 
 
 if __name__ == "__main__":
-    employee_id = argv[1]
-    todolistGet(employee_id)
+    employee_id = int(argv[1])
+    result = todolistGet(employee_id)
+    print(result)
