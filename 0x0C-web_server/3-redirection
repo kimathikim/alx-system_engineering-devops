@@ -5,13 +5,15 @@
 sudo apt update
 # installl nginx
 sudo apt-get install nginx -y
+sudo ufw allow 'Nginx FULL'
+sudo ufw allow 'ssh'
 # change ownership
 sudo chown -R "$USER":"$USER" /var/www
 # update the default file dispayed
 echo "Hello World!" | tee /var/www/html/index.nginx-debian.html
-# restart nginx
 # Configuring Nginx server so that /redirect_me is redirect to another page
 replace="\n\tlocation /redirect_me {\n\t\treturn 301 https://www.youtube.com/watch?v=QH2-TGUlwu4;\n\t}\n"
 sudo sed -i "53i\ $replace" /etc/nginx/sites-available/default
+# restart nginx
 sudo systemctl restart nginx
 sudo apt autoremove -y

@@ -2,9 +2,11 @@
 # bash script that Install nginx web server
 
 #update the server
-sudo apt update
+sudo apt update && sudo apt upgrade -y
 # installl nginx
 sudo apt-get install nginx -y
+sudo ufw allow 'Nginx FULL'
+sudo ufw allow 'ssh'
 # change ownership
 sudo chown -R "$USER":"$USER" /var/www
 # update the default file dispayed
