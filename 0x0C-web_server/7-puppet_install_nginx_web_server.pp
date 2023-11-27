@@ -1,9 +1,11 @@
+include ufw
 # Install Nginx web server (w/ Puppet)
 package { 'nginx':
-  ensure => installed,
+  package_ensure => installed,
+  service_ensure => 'running',
 }
 
-file_line { 'line':
+file{ 'Redirect rule':
   ensure => 'present',
   path   => '/etc/nginx/sites-available/default',
   after  => 'server_name _',
@@ -18,3 +20,27 @@ service { 'nginx':
   ensure  => running,
   require => Package['nginx'],
 }
+package {'ufw':
+ensure => installed,
+  }
+
+service {'ufw':
+ensure  => running,
+enable  => true,
+require => Package['ufw'],
+}
+# allow Nginx and SSh
+ufw{'Nginx FULL':
+rule  => 'allow',
+port  => [80,443],
+proto => 'tcp',
+order => 1,
+}
+
+ufw {'SSH':
+rule  => 'allow',
+port  => 22,
+proto => 'tcp',
+order => 2,
+}
+

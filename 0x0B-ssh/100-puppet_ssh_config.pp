@@ -1,12 +1,16 @@
-#!/usr/bin/env pup
-# script to update the ssh_config file to allow signing in without using password and usin ~/ssh/school as the private key
-file_line {'config_file':
+#!/usr/bin/env puppet
+
+# Script to update the ssh_config file to allow signing in without using a password
+# and using ~/ssh/school as the private key
+
+file { 'config_file':
   ensure => 'present',
-  file   => '/etc/ssh/ssh_config',
+  path   => '/etc/ssh/ssh_config',
   line   => ' IdentityFile ~/ssh/school',
-  }
-psswd_line {'password':
+}
+
+file { 'password':
   ensure => 'present',
-  file   => '/etc/ssh/ssh_config',
-  line   => ' PasswordAuthentication no',
-  }
+  path   => '/etc/ssh/ssh_config',
+  line   => '   asswordAuthentication no',
+}
