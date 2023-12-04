@@ -7,17 +7,14 @@ sudo apt-get -y update
 sudo apt-get -y upgrade
 sudo apt-get install haproxy -y
 sudo chown -R ubuntu /etc/haproxy/
-sudo ufw allow ssh
-
-config="\
 frontend http
 	bind *:80
 	mode http
 	default_backend web-server
 backend web-server
 	balance roundrobin
-	server 3670-web-01 100.25.34.49:80 check
-	server 3670-web-02 	54.90.6.47:80 check
+	server 91190-web-01 100.25.34.49:80 check
+	server 91190-web-02 	54.90.6.47:80 check
 "
 
 echo "$config" | sudo tee -a /etc/haproxy/haproxy.cfg >/dev/null
