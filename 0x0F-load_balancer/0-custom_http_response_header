@@ -1,0 +1,17 @@
+#!/bin/bash
+# script to add a custom header to the server
+
+# setting the custom header
+Header_name="X-Served-By"
+# get the hostname of the server
+hostname=$(hostname)
+# assigning a path to Nginx config file
+n_config_file="/etc/nginx/sites-available/default"
+# if the file doesn't exist then exit
+if [ ! -f "$n_config_file" ]; then
+	echo "Nginx configuration file doesn't exist"
+	exit 1
+fi
+
+# add the custom header to server inside http block
+sudo sed -i "47i\ add_header $Header_name $hostname;" "$n_config_file"
