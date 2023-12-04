@@ -1,17 +1,28 @@
-#!/bin/bash
-# script to add a custom header to the server
+#!/usr/bin/env bash
+# bash script that Install nginx web server
 
-# setting the custom header
-Header_name="X-Served-By"
-# get the hostname of the server
+#update the server
+sudo apt update
+sudo apt-get upgrade -y
+# installl nginx
+sudo apt-get install nginx -y
+sudo ufw allow 'Nginx FULL'
+sudo ufw allow 'ssh'
+# change ownership
+sudo chown -R "$USER":"$USER" /var/www
+# update the default file dispayed
+echo "Hello World!" | tee /var/www/html/index.nginx-debian.html
+#the 404 error message
+echo "Ceci n'est pas une page" >/var/www/html/404.html
+# Configuring Nginx server so that /redirect_me is redirect to another page
+error404="\n\\terror_page 404 /404.html;\n\tlocation = /var/www/html/404.html {\n\t\tinternal;\n\t}"
+replace="\n\tlocation /redirect_me {\n\t\treturn 301 https://www.youtube.com/watch?v=QH2-TGUlwu4;\n\t}\n"
 hostname=$(hostname)
-# assigning a path to Nginx config file
-n_config_file="/etc/nginx/sites-available/default"
-# if the file doesn't exist then exit
-if [ ! -f "$n_config_file" ]; then
-	echo "Nginx configuration file doesn't exist"
-	exit 1
-fi
-
+Header_name="X-Served-By"
+config_file="/etc/nginx/sites-available/default"
+insert_header="add_header $Header_name $hostname;\n"
 # add the custom header to server inside http block
-sudo sed -i "47i\ add_header $Header_name $hostname;" "$n_config_file"
+sudo sed -i "47i\ $error404$replace" "$config_file"
+sudo sed -i "47i\ \t\t$insert_header" "$config_file"
+sudo systemctl restart nginx
+sudo apt autoremove -y
