@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+# This script update, upgrede the system and install nginx
+sudo apt-get update -y && sudo apt-get upgrade -y
+sudo apt install nginx -y
+sudo service nginx start
