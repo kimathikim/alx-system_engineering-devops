@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-## Bash script that will display information about subdomains.
+# Bash script that will display information about subdomains.
 
 sub_domain() {
 	declare -a subdomains=("www" "lb-01" "web-01" "web-02")
