@@ -33,8 +33,6 @@ defaults
         errorfile 504 /etc/haproxy/errors/504.http
 frontend http
     bind *:80
-    mode http
-    default_backend my-servers
 
 # configue hhtps//www to listen *:443 and solve with backend
 frontend https-www
@@ -44,6 +42,6 @@ frontend https-www
 
 
 backend my-servers
-    http-request redirect scheme https code 301 if !{ ssl_fc }
+    redirect scheme https code 301 if !{ ssl_fc }
     server 91190-web-02 54.160.90.197:80 check
     server 91190-web-01 107.23.61.249:80 check
