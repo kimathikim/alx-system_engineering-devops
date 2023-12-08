@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# This script update, upgrede the system and install nginx
-sudo apt-get update -y && sudo apt-get upgrade -y
-sudo apt install nginx -y
-sudo service nginx start
+# Nginx must be running, and listening on port 80 of all the server’s active IPv4 IPs
+rm /etc/nginx/sites-enabled/default
+ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
+sudo service nginx restart
