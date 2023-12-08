@@ -1,4 +1,5 @@
 global
+        log /dev/log    local0
         log /dev/log    local1 notice
         chroot /var/lib/haproxy
         stats socket /run/haproxy/admin.sock mode 660 level admin expose-fd listeners
@@ -32,16 +33,16 @@ defaults
         errorfile 503 /etc/haproxy/errors/503.http
         errorfile 504 /etc/haproxy/errors/504.http
 frontend http
-    bind *:80
-
-# configue hhtps//www to listen *:443 and solve with backend
+        bind *:80
+        mode http
+        default_backend web-server
 frontend https-www
-        bind *:443 ssl crt /etc/ssl/www.vandi.tech/www.vandi.tech.pem
-        http-request set-header X-Forwarded-proto https
-        default_backend my-servers
+        bind *:443 ssl crt /etc/letsencrypt/live/www.vandi.tech/privkey.pem
+        http-request set-header X-Forwarded-Proto https
+        default_backend web-server
+backend web-server
+        balance roundrobin
+        redirect scheme https if !{ ssl_fc }
+        server 91190-web-01 100.25.34.49:80 check
+        server 91190-web-02 54.90.6.47:80 check
 
-
-backend my-servers
-    redirect scheme https code 301 if !{ ssl_fc }
-    server 91190-web-02 54.160.90.197:80 check
-    server 91190-web-01 107.23.61.249:80 check
