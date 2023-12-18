@@ -6,10 +6,15 @@
 #   ufw-before-input
 #   ufw-before-output
 #   ufw-before-forward
-# Configure web-01 so that its firewall redirects port 8080/TCP to port 80/TCP.
+#
+*filter
+:ufw-user-forward - [0:0]
+-A ufw-user-forward -p tcp --dport 8080 -j ACCEPT
+COMMIT
+
 *nat
 :PREROUTING ACCEPT [0:0]
--A PREROUTING -p tcp --dport 8080 -j REDIRECT --to-port 80
+-A PREROUTING -p tcp --dport 8080 -j DNAT --to-destination  80
 COMMIT
 # Don't delete these required lines, otherwise there will be errors
 *filter
@@ -76,3 +81,4 @@ COMMIT
 
 # don't delete the 'COMMIT' line or these rules won't be processed
 COMMIT
+
