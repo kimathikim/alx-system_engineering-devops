@@ -1,4 +1,4 @@
-sudo apt install ufw
+sudo apt install ufw -y 
 sudo ufw enable
 sudo ufw  allow 22/tcp
 sudo ufw allow 443/tcp
