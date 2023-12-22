@@ -2,4 +2,4 @@
 # this script runs a whoami cun=mmand under the user passed as an argument
 
 user=$1
-sudo -u $user whoami
+sudo -u "$user" whoami
