@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+# the script is used to run nginx from nginx user
+# change the ownership of the nginx directory to group ownership
+sudo chown 744 /etc/nginx/nginx.conf
+# using sed to replace the default port 80 with 8080
+sudo sed -i 's/80/8080/g' /etc/nginx/sites-available/default
+# restart nginx
+sudo service nginx stop
+sudo -u nginx service nginx restart
