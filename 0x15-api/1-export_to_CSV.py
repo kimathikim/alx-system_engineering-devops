@@ -37,12 +37,14 @@ def todolistGet(id):
         exporter = csv.writer(file, delimiter=",", quotechar="'")
         for task in todo:
             task_completed = "True" if task.get("completed") else "False"
-            exporter.writerow([
-                json.dumps(id),
-                json.dumps(user.get("username")),
-                json.dumps(task_completed),
-                json.dumps(task.get("title"))
-            ])
+            exporter.writerow(
+                [
+                    json.dumps(id),
+                    json.dumps(user.get("username")),
+                    json.dumps(task_completed),
+                    json.dumps(task.get("title")),
+                ]
+            )
 
 
 if __name__ == "__main__":
