@@ -34,7 +34,7 @@ def todolistGet(id):
     )
     # printing the titles of the completed tasks
     for task in task_done_data:
-        print("\t {}".format(task.get("title")))
+        print("\t{}".format(task.get("title")))
 
 
 if __name__ == "__main__":
