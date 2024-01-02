@@ -28,13 +28,13 @@ def todolistGet(id):
     lentask = len(task_done_data)
 
     print(
-        "Employee {} is done with tasks ({}/{})".format(
+        "Employee {} is done with tasks ({}/{}):".format(
             user_data.get("name"), lentask, lentodo
         )
     )
     # printing the titles of the completed tasks
     for task in task_done_data:
-        print("\t{}".format(task.get("title")))
+        print("\t {}".format(task.get("title")))
 
 
 if __name__ == "__main__":
