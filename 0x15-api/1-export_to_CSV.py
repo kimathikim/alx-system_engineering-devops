@@ -6,8 +6,8 @@ info of an employee about his TODO list progress
 """
 import csv
 import json
-from sys import argv
 import requests
+import sys
 
 
 class CustomDialect(csv.excel):
@@ -15,22 +15,20 @@ class CustomDialect(csv.excel):
 
 
 def todolistGet(id):
-    """function that defines the endpoints and retreived data"""
+    """function that defines the endpoints and retrieves data"""
 
     # url
     url = "https://jsonplaceholder.typicode.com"
 
     # endpoints
-    user = "{}/users/{}".format(url, str(id))
-    todo = "{}/todos".format(user)
+    user_url = "{}/users/{}".format(url, str(id))
+    todo_url = "{}/todos".format(user_url)
 
-    # get the data. making the request using get method and
-    # specified format to be used
-    user = requests.get(user)
-    user = user.json()
-    todo = requests.get(todo)
-    todo = todo.json()
-    # print("{}".format(todo))
+    # get the data
+    user_response = requests.get(user_url)
+    user = user_response.json()
+    todo_response = requests.get(todo_url)
+    todo = todo_response.json()
 
     # exporting to csv
     with open(str(id) + ".csv", "w", encoding="utf8") as file:
@@ -48,5 +46,5 @@ def todolistGet(id):
 
 
 if __name__ == "__main__":
-    employee_id = argv[1]
+    employee_id = sys.argv[1]
     todolistGet(employee_id)
