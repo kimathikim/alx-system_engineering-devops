@@ -1,5 +1,4 @@
 #!/usr/bin/python3
-
 """
 a script that uses restul API to return the
 info of an employee about his TODO list progress
@@ -10,7 +9,6 @@ from sys import argv
 
 def todolistGet(id):
     """function that defines the endpoints and retrieves data"""
-
     # url
     url = "https://jsonplaceholder.typicode.com"
 
@@ -28,7 +26,7 @@ def todolistGet(id):
     lentask = len(task_done_data)
 
     print(
-        "Employee {} is done with tasks ({}/{}):".format(
+        "Employee {} is done with tasks({}/{}):".format(
             user_data.get("name"), lentask, lentodo
         )
     )
