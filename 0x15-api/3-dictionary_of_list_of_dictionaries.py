@@ -24,18 +24,21 @@ def todolistGet():
 
     # exporting to json
     to_json = {}
-    with open("todo_all_employees.json", "w", encoding="utf8") as file:
-        for user in users_data:
-            to_json[user.get("id")] = []
-            todo_endpoint = "{}/todos?userId={}".format(url, user.get("id"))
-            todo_response = requests.get(todo_endpoint)
-            todo_data = todo_response.json()
-            for task in todo_data:
-                to_json[user.get("id")].append({
+    for user in users_data:
+        to_json[user.get("id")] = []
+        todo_endpoint = "{}/todos?userId={}".format(url, user.get("id"))
+        todo_response = requests.get(todo_endpoint)
+        todo_data = todo_response.json()
+        for task in todo_data:
+            to_json[user.get("id")].append(
+                {
                     "task": task.get("title"),
                     "completed": task.get("completed"),
-                    "username": user.get("username")
-                })
+                    "username": user.get("username"),
+                }
+            )
+
+    with open("todo_all_employees.json", "w", encoding="utf8") as file:
         json.dump(to_json, file)
 
 
