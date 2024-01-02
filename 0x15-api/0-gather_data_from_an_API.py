@@ -9,32 +9,33 @@ from sys import argv
 
 
 def todolistGet(id):
-    """function that defines the endpoints and retreived data"""
+    """function that defines the endpoints and retrieves data"""
 
     # url
     url = "https://jsonplaceholder.typicode.com"
 
     # endpoints
-    user = "{}/users/{}".format(url, id)
-    # print("{}".format(user))
-    todo = "{}/todos".format(user)
-    task_Done = "{}?completed=true".format(todo)
+    user = f"{url}/users/{id}"
+    todo = f"{url}/todos?userId={id}"
+    task_done = f"{url}/todos?userId={id}&completed=true"
 
-    # get the data. making the request using get method and
-    # specified format to be used
-    user = requests.get(user)
-    user = user.json()
-    # print("{}".format(user))
-    todo = requests.get(todo)
-    todo = todo.json()
-    task_Done = requests.get(task_Done)
-    task_Done = task_Done.json()
-    print("Employee {} is done with tasks({}/{}):".format(
-        user.get("name"), len(task_Done), len(todo)))
-    for task in task_Done:
+    # get the data
+    user_data = requests.get(user).json()
+    todo_data = requests.get(todo).json()
+    task_done_data = requests.get(task_done).json()
+
+    lentodo = len(todo_data)
+    lentask = len(task_done_data)
+
+    print(
+        "Employee {} is done with tasks ({}/{})".format(
+            user_data.get("name"), lentask, lentodo
+        )
+    )
+    # printing the titles of the completed tasks
+    for task in task_done_data:
         print("\t {}".format(task.get("title")))
 
 
 if __name__ == "__main__":
-    employee_id = argv[1]
-    todolistGet(employee_id)
+    todolistGet(argv[1])
