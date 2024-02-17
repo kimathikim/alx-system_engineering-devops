@@ -17,12 +17,8 @@ def top_ten(subreddit):
     }
     response = requests.get(url, headers=headers)
     if response.status_code == 200:
-        data = response.json().get("data")
-        if data and data.get("children"):
-            titles = data.get("children")
-            for title in titles:
-                print(title.get("data").get("title"))
-        else:
-            print("No posts found in the subreddit.")
+        titles = response.json().get("data").get("children")
+        for title in titles:
+            print(title.get("data").get("title"))
     else:
         print("None")
